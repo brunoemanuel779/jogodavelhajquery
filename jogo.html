@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Jogo jquery
+        </title>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="javascript/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript">
+            $(document).ready(function(){
+               $(".btnjogar").click(function(){
+                   var nome1=$(".jogador1").val();
+                   var nome2=$(".jogador2").val();
+                   
+                   if(nome1.trim().length > 0 && nome2.length > 0){
+                       comecarJogo(); 
+                   }else{
+                       $(".error").css({'display':'block'});
+                       $(".error").css({'color':'red'});
+                     
+                       
+                   }
+                   function comecarJogo(){
+                       alert("O jogo vai começar");
+                       var contador =0;
+                       $("table td").click(function(){
+                           contador++;
+                           if(contador <=9){
+                           if(contador %2==0){
+                              $(this).text("O");
+                           }
+                       else{
+                             $(this).text("X");               
+                            }
+                           }
+                           if(verificarGanhador() == true){
+                               contador=9;
+                           }
+                           if(contador==9){
+                               $(".error").css({'display':'block'});
+                               $(".error").css({'color':'red'});
+                               $(".error").text("Jogo acabou");
+                           }
+                           }
+                        
+                        );
+                   }
+                   
+                   function verificarGanhador(){
+                       var vencedor=[
+                           [0,1,2],
+                           [3,4,5],
+                           [6,7,8],
+                           //colunas
+                           [0,3,6],
+                           [1,4,7],
+                           [2,5,8],
+                           //diagonais
+                           [0,4,8],
+                           [6,4,2]
+                       ];
+                       var x= new Array(9);
+                       var o= new Array(9);
+                       
+                    $("table td").each(function(key,value){
+                        
+                        if($(this).text()=="X"){
+                            x[key]=key; 
+                           
+                           }
+                        if($(this).text()=="O"){
+                            o[key]=key; 
+                           
+                           }
+                    });
+                       
+                       //percorre as linhas
+                      for(var i=0;i<vencedor.length;i++){
+                          contadorx=0;
+                          contadoro=0;
+                          //percorre a coluna de uma linha
+                          for(y=0;y<vencedor[i].length;y++){
+                              if(x[vencedor[i][y]] == vencedor[i][y]){
+                                  contadorx++;
+                              } 
+                              if(o[vencedor[i][y]] == vencedor[i][y]){
+                                  contadoro++;
+                              } 
+                              vencedor[i][y];
+                          }
+                          if(contadorx==3){
+                              alert("Jogador: X-"+nome1+" Ganhou");
+                              return true;
+                          }
+                          if(contadoro==3){
+                              alert("Jogador: O-"+nome2+" Ganhou");
+                              return true;
+                          }
+                      }
+                   }
+                   
+                   
+               }); 
+               
+            });
+        </script>
+    </head>
+    <body>
+       <div class="configurador">
+          <span>X</span>  <input type="text" placeholder="Digite seu nome jogador 1" name="jogador1" class="jogador1"><span>X</span>
+            <input type="text" placeholder="Digite seu nome jogador 2" name="jogador2" class="jogador2" >
+            <span>O</span><br><br> <span class="error">Digite um nome para os jogadores</span>
+            <button class="btnjogar">Iniciar Jogo</button><br><br>
+       </div>
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </body>
+</html>
